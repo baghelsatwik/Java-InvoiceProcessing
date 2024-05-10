@@ -17,14 +17,14 @@ const Component = styled(Box)({
 })
 
 const defaultObj = {
-  vender: '',
+  vendor: '',
   product: '',
   amount: 0,
   date: '',
   action: 'pending'
 }
 
-const AddInvoice = () => {
+const AddInvoice = ({ setAddInvoice }) => {
 
   const [invoice, setInvoice] = useState(defaultObj);
 
@@ -32,8 +32,9 @@ const AddInvoice = () => {
     setInvoice({ ...invoice, [e.target.name]: e.target.value });
   };
 
-  const addNewInvoice = async() => {
-    await saveInvoice({...invoice, amount: Number(invoice['amount'])});
+  const addNewInvoice = async () => {
+    await saveInvoice({ ...invoice, amount: Number(invoice['amount']) });
+    setAddInvoice(false);
   }
 
   return (
@@ -41,9 +42,9 @@ const AddInvoice = () => {
       <Typography>Add Invoice</Typography>
       <TextField
         variant="standard"
-        placeholder="Enter vender name"
+        placeholder="Enter vendor name"
         onChange={(e) => onValueChange(e)}
-        name="vender"
+        name="vendor"
         autoComplete="off"
       />
       <TextField
@@ -69,7 +70,10 @@ const AddInvoice = () => {
         name="date"
         autoComplete="off"
       />
-      <Button variant="contained" onClick={() => addNewInvoice()}>Add Invoice</Button>
+      <Button
+        variant="contained"
+        onClick={() => addNewInvoice()}
+      >Add Invoice</Button>
     </Component>
   )
 }
